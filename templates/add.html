@@ -1,0 +1,104 @@
+<html>
+<head>
+<link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+</head>
+<body>
+	<header>
+	<div class="top-banner">
+		<div id="top-nav-container">
+			<nav class="nav-top">
+					<ul>
+						<li><a href="#">Switch Sites</a>
+							<ul>
+								<li><a href="{{ nav_urls["delete_url"] }}">Nardoo Hills</a></li>
+								<li><a href="{{ nav_urls["delete_url"] }}">Round House</a></li>
+								<li><a href="{{ nav_urls["mod_url"] }}">Jock Marshall</a></li>
+								<li><a href="{{ nav_urls["freaklabsjpn_url"] }}">Sandbox Japan</a></li>
+								<li><a href="{{ nav_urls["freaklabsau_url"] }}">Sandbox Australia</a></li>
+							</ul>
+						</li>
+					<li><a href="{{ nav_urls["photos_url"] }}">Photo Gallery</a></li>
+					<li><a href="{{ nav_urls["about_url"] }}">About The Project</a></li>
+					<li><a href="{{ nav_urls["team_url"] }}">The Team</a></li>
+					<li><a href="{{ nav_urls["contact_url"] }}">Contact</a></li>
+				</ul>
+			</nav>
+		</div>
+			<a href="/" class="h1">
+				<h1>{{ title }}</h1>
+				<h2>{{ deploy_site }}</h2></a>
+			<div id="main-nav-container">
+			<nav class="nav-main">
+				<ul>
+					<li><a href="{{ nav_urls["gateways_url"] }}">Gateways</a></li>
+					<li><a href="{{ nav_urls["stations_url"] }}">Stations</a></li>
+					<li><a href="{{ nav_urls["readings_url"] }}">Readings</a></li>
+					<li class="nav-main-active"><a href="#">Edit</a>
+						<ul>
+							<li class="nav-main-active"><a href="{{ nav_urls["add_url"] }}">Add</a></li>
+							<li><a href="{{ nav_urls["mod_url"] }}">Modify</a></li>
+							<li><a href="{{ nav_urls["delete_url"] }}">Delete</a></li>
+						</ul>
+					</li>
+					<li><a href="{{ nav_urls["download_url"] }}">Download Readings</a></li>
+				</ul>
+		</nav>
+	</div>
+</div>
+</header>
+<main>
+		<h3>Add New Gateway or Station</h3>
+		<p class="form_instructions">{{ message }}</p>
+		<div class = "half-column">
+		<h4>Add New Gateway</h4>
+			<form action="/add" method="POST">
+			<p class="form_input">
+				<input type="hidden" name="form" value="addGateway"/>
+				<label for="gw_id">Gateway id*: </label>
+				<input type="text" required name="gw_id" placeholder="Enter gateway id"/><br/></br>
+				<label for="gw_model">Gateway Model*: </label>
+				<input type="text" required name="gw_model" placeholder="eg. Baseliner 3G v0.9"/><br/></br>
+				<label for="gw_sw">Gateway Software*: </label>
+				<input type="text" required name="gw_sw" placeholder="software version"/><br/></br>
+				<label for="gw_lora_addr">Gateway LoRa Address*: </label>
+				<input type="text" required name="gw_lora_addr" placeholder="eg. 03xdet"/><br/></br>
+				<label for="gw_site">Gateway Site*: </label>
+				<input type="text" required name="gw_site" placeholder="eg. Hideout"/><br/></br>
+				<label for="gw_locate">Gateway Location*: </label>
+				<input type="text" required name="gw_locate" placeholder="Google Maps url"/><br/></br>
+				<button type="submit">Add</button>
+			</p>
+		</form>
+	</div>
+
+	<div class = "half-column">
+	<h4>Add New Station</h4>
+	<form action="/add" method="POST">
+	<p class="form_input">
+		<input type="hidden" name="form" value="addStation"/>
+		<label for="ss_id">Station id*: </label>
+		<input type="text" required name="ss_id" placeholder="Enter station id"/><br/></br>
+		<label for="ss_model">Station Model*: </label>
+		<input type="text" required name="ss_model" placeholder="eg.LoRa v0.9"/><br/></br>
+		<label for="ss_sw">Station Software*: </label>
+		<input type="text" required name="ss_sw" placeholder="software version"/><br/></br>
+		<label for="gw_id">Link to Gateway*: </label>
+		<input type="text" required name="gw_id" placeholder="Enter gateway ID"/><br/></br>
+		<label for="ss_site">Station Site*: </label>
+		<input type="text" required name="ss_site" placeholder="eg. Lower Orchard"/><br/></br>
+		<label for="ss_num">Station Number*: </label>
+		<input type="text" required name="ss_num" placeholder="eg. 2"/><br/></br>
+		<label for="ss_locate">Station Location*:</label>
+		<input type="text" required name="ss_locate" placeholder="Google Maps URL"/><br/></br>
+		<button type="submit">Add</button>
+	</p>
+</form>
+</div>
+</main>
+<footer>
+	<hr>
+		<img src="{{url_for('static', filename='freaklabs.png')}}"/><img src="{{url_for('static', filename='bha.jpg')}}"/><img src="{{url_for('static', filename='monashuni.png')}}"/>
+		<p>© 2022 Copyright</p>
+</footer>
+</body>
+</html>

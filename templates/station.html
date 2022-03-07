@@ -1,0 +1,109 @@
+<html>
+<head>
+<link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+</head>
+<body>
+	<header>
+	<div class="top-banner">
+		<div id="top-nav-container">
+			<nav class="nav-top">
+					<ul>
+						<li><a href="#">Switch Sites</a>
+							<ul>
+								<li><a href="{{ nav_urls["delete_url"] }}">Nardoo Hills</a></li>
+								<li><a href="{{ nav_urls["delete_url"] }}">Round House</a></li>
+								<li><a href="{{ nav_urls["mod_url"] }}">Jock Marshall</a></li>
+								<li><a href="{{ nav_urls["freaklabsjpn_url"] }}">Sandbox Japan</a></li>
+								<li><a href="{{ nav_urls["freaklabsau_url"] }}">Sandbox Australia</a></li>
+							</ul>
+						</li>
+					<li><a href="{{ nav_urls["photos_url"] }}">Photo Gallery</a></li>
+					<li><a href="{{ nav_urls["about_url"] }}">About The Project</a></li>
+					<li><a href="{{ nav_urls["team_url"] }}">The Team</a></li>
+					<li><a href="{{ nav_urls["contact_url"] }}">Contact</a></li>
+				</ul>
+			</nav>
+		</div>
+			<a href="/" class="h1">
+				<h1>{{ title }}</h1>
+				<h2>{{ deploy_site }}</h2></a>
+		<div id="main-nav-container">
+		<nav class="nav-main">
+			<ul>
+				<li><a href="{{ nav_urls["gateways_url"] }}">Gateways</a></li>
+				<li class="nav-main-active" ><a href="{{ nav_urls["stations_url"] }}">Stations</a></li>
+				<li><a href="{{ nav_urls["readings_url"] }}">Readings</a></li>
+				<li><a href="#">Edit</a>
+					<ul>
+						<li><a href="{{ nav_urls["add_url"] }}">Add</a></li>
+						<li><a href="{{ nav_urls["mod_url"] }}">Modify</a></li>
+						<li><a href="{{ nav_urls["delete_url"] }}">Delete</a></li>
+					</ul>
+				</li>
+				<li><a href="{{ nav_urls["download_url"] }}">Download Readings</a></li>
+			</ul>
+		</nav>
+	</div>
+</div>
+</header>
+<main>
+		<h3>Station {{ station_data["ss_id"] }}</h3>
+		<h4>Current Setup and Meta Data</h4>
+		<p>Model: {{ station_data["ss_model"] }}</p>
+		<p>Software: {{ station_data["ss_sw"] }}</p>
+		<p>Linked gateway: <a href="/gateway/{{ station_data["gw_id"] }}"> gateway {{ station_data["gw_id"] }}</a></p>
+		<p>Site: {{ station_data["ss_site"] }}</p>
+		<p>Station number: {{ station_data["ss_num"] }}</p>
+		<p>Location: <a href="{{ station_data["ss_locate"] }}" target="_blank">{{ station_data["ss_locate"] }}</a></p>
+		<a href="/modify" class="modify">Modify</a>
+		<h4>Readings</h4>
+		<ul>
+			<li><p><a href="#stationreadings">Station only readings (all)</a></li>
+			<li><p><a href="/station/{{ station_data["ss_id"] }}/readings">Complete readings (last 20 records)</a></p></li>
+		</ul>
+		<h4 id="stationreadings">Station {{ station_data["ss_id"] }} Readings</h4>
+		<i class="note">Station only data, All readings</i>
+				<table>
+					<thead>
+						<tr>
+							<th>reading ID</th>
+							<th>live, test</th>
+							<th class="table_scs">gw timestamp</th>
+							<th class="table_scs">scs id</th>
+							<th class="table_scs">gw id</th>
+							<th class="table_scs">scs num</th>
+							<th class="table_scs">scs rssi</th>
+							<th class="table_scs">scs conn att</th>
+							<th class="table_scs">scs send fail</th>
+							<th class="table_scs">scs encl temp</th>
+							<th class="table_scs">scs batt</th>
+							<th class="table_scs">scs solar val</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for reading in station_data["readings"] %}
+						<tr>
+							<td>{{ reading["reading_id"] }}</td>
+							<td>{{ reading["live_test"] }}</td>
+							<td>{{ reading["gw_date_time"] }}</td>
+							<td>{{ reading["ss_id"] }}</td>
+							<td>{{ reading["ss_num"] }}</td>
+							<td>{{ reading["ss_rssi"] }}</td>
+							<td>{{ reading["ss_conn_att"] }}</td>
+							<td>{{ reading["ss_send_fail"] }}</td>
+							<td>{{ reading["ss_encl_temp"] }}</td>
+							<td>{{ reading["ss_batt"] }}</td>
+							<td>{{ reading["ss_solar_val"] }}</td>
+							<td>{{ reading["gw_id"] }}</td>
+						</tr>
+				{% endfor %}
+					</tbody>
+				</table>
+</main>
+<footer>
+	<hr>
+		<img src="{{url_for('static', filename='freaklabs.png')}}"/><img src="{{url_for('static', filename='bha.jpg')}}"/><img src="{{url_for('static', filename='monashuni.png')}}"/>
+		<p>© 2022 Copyright</p>
+</footer>
+</body>
+</html>

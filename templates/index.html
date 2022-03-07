@@ -1,0 +1,83 @@
+<html>
+<head>
+<link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+</head>
+<body>
+	<header>
+	<div class="top-banner">
+		<div id="top-nav-container">
+			<nav class="nav-top">
+					<ul>
+						<li><a href="#">Switch Sites</a>
+							<ul>
+								<li><a href="{{ nav_urls["delete_url"] }}">Nardoo Hills</a></li>
+								<li><a href="{{ nav_urls["delete_url"] }}">Round House</a></li>
+								<li><a href="{{ nav_urls["mod_url"] }}">Jock Marshall</a></li>
+								<li><a href="{{ nav_urls["freaklabsjpn_url"] }}">Sandbox Japan</a></li>
+								<li><a href="{{ nav_urls["freaklabsau_url"] }}">Sandbox Australia</a></li>
+							</ul>
+						</li>
+					<li><a href="{{ nav_urls["photos_url"] }}">Photo Gallery</a></li>
+					<li><a href="{{ nav_urls["about_url"] }}">About The Project</a></li>
+					<li><a href="{{ nav_urls["team_url"] }}">The Team</a></li>
+					<li><a href="{{ nav_urls["contact_url"] }}">Contact</a></li>
+				</ul>
+			</nav>
+		</div>
+		<a href="/" class="h1">
+			<h1>{{ title }}</h1>
+			<h2>{{ deploy_site }}</h2></a>
+		<div id="main-nav-container">
+		<nav class="nav-main">
+			<ul>
+				<li><a href="{{ nav_urls["gateways_url"] }}">Gateways</a></li>
+				<li><a href="{{ nav_urls["stations_url"] }}">Stations</a></li>
+				<li><a href="{{ nav_urls["readings_url"] }}">Readings</a></li>
+				<li><a href="#">Edit</a>
+					<ul>
+						<li><a href="{{ nav_urls["add_url"] }}">Add</a></li>
+						<li><a href="{{ nav_urls["mod_url"] }}">Modify</a></li>
+						<li><a href="{{ nav_urls["delete_url"] }}">Delete</a></li>
+					</ul>
+				</li>
+				<li><a href="{{ nav_urls["download_url"] }}">Download Readings</a></li>
+			</ul>
+		</nav>
+	</div>
+</div>
+</header>
+<main>
+	<h3>Gateways</h3>
+		{% for gateway in gateways %}
+			<h4><a href="/gateway/{{ gateway["gw_id"] }}">Gateway {{ gateway["gw_id"] }}</a></h4>
+			<p>Site: {{ gateway["gw_site"] }}</p>
+			<p>Location: <a href="{{ gateway["gw_locate"] }}" target="_blank">{{ gateway["gw_locate"] }}</a></p>
+			<a href="/gateway/{{ gateway["gw_id"] }}">Current Setttings</a></p>
+			{% if gateway["gw_stations"] %}
+				<h4>Active Soil Condition Stations</h4>
+					<ul>
+					{% for scs in gateway["gw_stations"] %}
+						<li>
+							<p><a href="/station/{{ scs["ss_id"] }}">soil condition station {{ scs["ss_num"] }}: device {{ scs["ss_id"] }} </a></p>
+						</li>
+						{% endfor %}
+					</ul>
+					{% else %}
+					<h4>No Active Stations</h4>
+			{% endif %}
+				<h4>Readings</h4>
+			<ul>
+				<li><p><a href="/gateway/{{ gateway["gw_id"] }}">Gateway only readings (all)</a></p></li>
+				<li><p><a href="/gateway/{{ gateway["gw_id"] }}/readings">Complete readings from all stations (last 20 records)</a></p></li>
+			</ul>
+		<br/>
+		<br/>
+		{% endfor %}
+</main>
+<footer>
+	<hr>
+		<img src="{{url_for('static', filename='freaklabs.png')}}"/><img src="{{url_for('static', filename='bha.jpg')}}"/><img src="{{url_for('static', filename='monashuni.png')}}"/>
+		<p>© 2022 Copyright</p>
+</footer>
+</body>
+</html>
